@@ -42,7 +42,7 @@ class Maze:
         self.reset_grid()
         cell_stack = []
         total_cells = self.rows * self.cols
-        current_cell = self.grid[(0, 0)]
+        current_cell = self.start
         visited_cells = 1
         while visited_cells < total_cells :
             neighbors = self.find_neigh(current_cell)
@@ -66,16 +66,18 @@ class Maze:
             else:
                 current_cell = cell_stack.pop()
 
-            if current_cell == self.grid[(self.rows-1, self.cols-1)]:
+            if current_cell == self.end:
                 self.path = cell_stack[:]
 
-        self.path.append(self.grid[(self.rows-1, self.cols-1)])
+        self.path.append(self.end)
 
 
     def reset_grid(self):
         for r in range(self.rows):
             for c in range(self.cols):
                 self.grid[(r, c)] = Cell(r, c)
+        self.start = self.grid[(0, 0)]
+        self.end = self.grid[(self.rows - 1, self.cols - 1)]
 
     def find_neigh(self, cell):
         directions = [N, S, E, W]

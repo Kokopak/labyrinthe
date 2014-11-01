@@ -5,7 +5,7 @@ import pygame
 from pygame.locals import *
 from maze import Maze
 
-SIZE_CELL = 30
+SIZE_CELL = 20
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -47,6 +47,10 @@ class Gui:
             if cell.e_wall:
                 pygame.draw.line(self.screen, RED, (col + SIZE_CELL, row), (col + SIZE_CELL, row + SIZE_CELL))
 
+        # Bordure sud et est
+        pygame.draw.line(self.screen, RED, (0, self.rows * SIZE_CELL - 1), (self.cols * SIZE_CELL, self.rows * SIZE_CELL - 1))
+        pygame.draw.line(self.screen, RED, (self.cols * SIZE_CELL - 1, self.rows), (self.cols * SIZE_CELL - 1, self.rows * SIZE_CELL - 1))
+
         if self.show_solution:
             for cell in self.maze.path:
                 row, col = cell.row * SIZE_CELL, cell.col * SIZE_CELL
@@ -68,5 +72,5 @@ class Gui:
 
 
 if __name__ == '__main__':
-    gui = Gui(30, 50)
+    gui = Gui(50, 50)
     gui.main_loop()
