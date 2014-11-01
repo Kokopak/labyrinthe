@@ -10,6 +10,7 @@ SIZE_CELL = 30
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
+GREEN = (120, 255, 0)
 
 class Gui:
 
@@ -25,8 +26,9 @@ class Gui:
 
         pygame.display.set_caption("OnlineByrinth")
 
-        self.quit = False
+        self.show_solution = False
 
+        self.quit = False
 
     def update(self):
         return
@@ -45,7 +47,10 @@ class Gui:
             if cell.e_wall:
                 pygame.draw.line(self.screen, RED, (col + SIZE_CELL, row), (col + SIZE_CELL, row + SIZE_CELL))
 
-
+        if self.show_solution:
+            for cell in self.maze.path:
+                row, col = cell.row * SIZE_CELL, cell.col * SIZE_CELL
+                pygame.draw.ellipse(self.screen, GREEN, pygame.Rect(col + SIZE_CELL / 4, row + SIZE_CELL / 4, SIZE_CELL / 2, SIZE_CELL / 2))
 
         pygame.display.flip()
 
@@ -56,6 +61,8 @@ class Gui:
                     self.quit = True
                 if event.type == KEYDOWN and event.key == pygame.K_SPACE:
                     self.maze.generate()
+                if event.type == KEYDOWN and event.key == pygame.K_s:
+                    self.show_solution = not self.show_solution
             self.update()
             self.draw()
 

@@ -34,6 +34,7 @@ class Maze:
         self.cols = cols
 
         self.grid = {}
+        self.path = []
 
         self.reset_grid()
 
@@ -64,6 +65,12 @@ class Maze:
                 visited_cells += 1
             else:
                 current_cell = cell_stack.pop()
+
+            if current_cell == self.grid[(self.rows-1, self.cols-1)]:
+                self.path = cell_stack[:]
+
+        self.path.append(self.grid[(self.rows-1, self.cols-1)])
+
 
     def reset_grid(self):
         for r in range(self.rows):
