@@ -54,10 +54,12 @@ class Gui:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.quit = True
+                if event.type == KEYDOWN and event.key == pygame.K_SPACE:
+                    self.maze.generate()
             self.update()
             self.draw()
 
 
 if __name__ == '__main__':
-    gui = Gui(20, 50)
+    gui = Gui(30, 50)
     gui.main_loop()

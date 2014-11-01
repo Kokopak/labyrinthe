@@ -35,11 +35,10 @@ class Maze:
 
         self.grid = {}
 
-        for r in range(self.rows):
-            for c in range(self.cols):
-                self.grid[(r, c)] = Cell(r, c)
+        self.reset_grid()
 
     def generate(self):
+        self.reset_grid()
         cell_stack = []
         total_cells = self.rows * self.cols
         current_cell = self.grid[(0, 0)]
@@ -66,16 +65,20 @@ class Maze:
             else:
                 current_cell = cell_stack.pop()
 
+    def reset_grid(self):
+        for r in range(self.rows):
+            for c in range(self.cols):
+                self.grid[(r, c)] = Cell(r, c)
 
     def find_neigh(self, cell):
-        neigh = [N, S, E, W]
+        directions = [N, S, E, W]
         neighbors = []
-        for n in neigh:
-            tmp_row, tmp_col = cell.row + n[0], cell.col + n[1]
+        for d in directions:
+            tmp_row, tmp_col = cell.row + d[0], cell.col + d[1]
             if tmp_row >= 0 and tmp_col >= 0 and tmp_row < self.rows and tmp_col < self.cols:
                 tmp_neigh = self.grid[(tmp_row, tmp_col)]
                 if tmp_neigh.all_walls() :
-                    neighbors.append((tmp_neigh, n))
+                    neighbors.append((tmp_neigh, d))
 
         return neighbors
 
